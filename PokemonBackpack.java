@@ -36,9 +36,9 @@ public class PokemonBackpack {
     }
 
     public void removeLastPokemonFromBackpack() {
-        //remove the last pokemon in the backpack
+        //remove the last pokemon in the backpack if there are still pokemon in the backpack
 
-        backpackArrayList.remove(backpackArrayList.size()-1);
+        if (backpackArrayList.size() != 0) backpackArrayList.remove(backpackArrayList.size()-1);
     }
 
 

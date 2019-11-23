@@ -5,15 +5,16 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
+import javax.swing.SwingWorker;
 
 /**
  * PokemonGUI
@@ -35,28 +36,62 @@ public class PokemonGUI {
 		JLabel noPokemonLabel = new JLabel("no pokemon in backpack");
 
 		public PokemonListPanel() {
-			add (noPokemonLabel);
+			add(noPokemonLabel);
 			setBackground(Color.LIGHT_GRAY);
+			setPreferredSize(new Dimension(1000, 5000));
+			// setMaximumSize(new Dimension(1000, 5000));
+		}
+
+		class PokemonImageLoader extends SwingWorker<ImageIcon, Object> {
+			Pokemon pokemon;
+			JLabel pJLabel;
+
+			public PokemonImageLoader(Pokemon p, JLabel pJLabel) {
+				this.pokemon = p;
+				this.pJLabel = pJLabel;
+			}
+
+			@Override
+			public ImageIcon doInBackground() throws InterruptedException, ExecutionException {
+				return this.pokemon.getImage();
+			}
+
+			@Override
+			protected void done() {
+				try {
+					pJLabel.setIcon(get());
+				} catch (Exception ignore) {
+				}
+			}
 		}
 
 		public void updateWithBackpack(PokemonBackpack pb) {
 			removeAll();
-			
+
 			if (pb.getBackpackSize() == 0) {
 				add(noPokemonLabel);
 			} else {
 				ArrayList<Pokemon> bAL = pb.getBackpackArrayList();
 				for (int i = 0; i < bAL.size(); i++) {
 					Pokemon p = bAL.get(i);
-					JLabel pJLabel = new JLabel(""+p.getName()+", "+p.getType(), p.getImageIcon(), SwingConstants.CENTER);
-					pJLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
+					JLabel pJLabel = new JLabel(""+p.getName()+", "+p.getType());
+
+					pJLabel.setIcon(p.getImageIcon());
+
+					if (!p.imageLoaded() && !p.getMakingRequest()) {
+						(new PokemonImageLoader(p, pJLabel)).execute();
+					}
+
+					pJLabel.setHorizontalTextPosition(JLabel.CENTER);
+					pJLabel.setVerticalTextPosition(JLabel.BOTTOM);
+
 					pJLabel.setBackground(Color.WHITE);
-					pJLabel.setMaximumSize(new Dimension(50, 50));
 					add(pJLabel);
-					revalidate();
-					repaint();
 				}
 			}
+
+			revalidate();
+			repaint();
 		}
 	}
 
@@ -77,7 +112,7 @@ public class PokemonGUI {
 
 		// Constructor: Sets up the Panel
 		public MainPokemonPanel() {
-			
+
 			add(nameLabel);
 			add(nameText);
 			add(typeLabel);
@@ -87,6 +122,10 @@ public class PokemonGUI {
 			add(backpackSizeButton);
 			add(sortButton);
 			add(pokemonListPanel);
+
+			JScrollPane pane = new JScrollPane(pokemonListPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			pane.setPreferredSize(new Dimension(1100, 500));
+			add(pane);
 
 			// Default values
 
@@ -98,8 +137,10 @@ public class PokemonGUI {
 
 			// configure panel.
 			nameLabel.setForeground(Color.WHITE);
+			typeLabel.setForeground(Color.WHITE);
+
 			setBackground(Color.DARK_GRAY);
-			setPreferredSize(new Dimension(1250, 270));
+			setPreferredSize(new Dimension(1250, 600));
 
 		}
 
