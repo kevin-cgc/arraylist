@@ -68,6 +68,8 @@ public class PokemonGUI {
 
 		private JButton appendButton = new JButton("add pokemon to end"); // buttons
 		private JButton removeButton = new JButton("remove pokemon from end");
+		private JButton backpackSizeButton = new JButton("get Backpack size");
+		private JButton sortButton = new JButton("sort Pokemon");
 
 		PokemonListPanel pokemonListPanel = new PokemonListPanel();
 
@@ -82,6 +84,8 @@ public class PokemonGUI {
 			add(typeText);
 			add(appendButton);
 			add(removeButton);
+			add(backpackSizeButton);
+			add(sortButton);
 			add(pokemonListPanel);
 
 			// Default values
@@ -89,6 +93,8 @@ public class PokemonGUI {
 			// connect event handler to event source
 			appendButton.addActionListener(new ButtonListener());
 			removeButton.addActionListener(new ButtonListener());
+			backpackSizeButton.addActionListener(new ButtonListener());
+			sortButton.addActionListener(new ButtonListener());
 
 			// configure panel.
 			nameLabel.setForeground(Color.WHITE);
@@ -111,6 +117,12 @@ public class PokemonGUI {
 					pb.appendPokemonToBackpack(p);
 				} else if (event.getSource() == removeButton) {
 					pb.removeLastPokemonFromBackpack();
+				}
+				else if(event.getSource() == backpackSizeButton){
+					pb.getBackpackSize();
+				}
+				else if(event.getSource() == sortButton){
+					pb.sortByName();
 				}
 
 				pokemonListPanel.updateWithBackpack(pb);
