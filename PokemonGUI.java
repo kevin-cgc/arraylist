@@ -38,7 +38,7 @@ public class PokemonGUI {
 		public PokemonListPanel() {
 			add(noPokemonLabel);
 			setBackground(Color.LIGHT_GRAY);
-			setPreferredSize(new Dimension(1000, 5000));
+			setPreferredSize(new Dimension(1000, 2500));
 			// setMaximumSize(new Dimension(1000, 5000));
 		}
 

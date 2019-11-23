@@ -84,6 +84,7 @@ public class Pokemon {
 
         try {
             this.makingRequest = true;
+
             Future<ImageIcon> f = Pokemon.futureImageCacheMap.get(pokemonName);
             if (f != null) {
                 // System.out.println(pokemonName+" using req");
@@ -124,7 +125,7 @@ public class Pokemon {
                 Matcher m = r.matcher(result);
 
                 if (m.find()) {
-                    String imageUrlStr = m.group(1);
+                    String imageUrlStr = m.group(1).replace("\\u003d", "\u003d");
 
                     // Image image = ImageIO.read(new URL(imageUrl)).getScaledInstance(Pokemon.imageScale, Pokemon.imageScale, Image.SCALE_DEFAULT);
 
@@ -158,7 +159,7 @@ public class Pokemon {
                 Pokemon.futureImageCacheMap.remove(pokemonName);
             }
         } finally {
-            makingRequest = false;
+            this.makingRequest = false;
         }
     }
 }
