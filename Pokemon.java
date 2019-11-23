@@ -8,14 +8,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import java.net.HttpURLConnection;
+
+import javax.imageio.ImageIO;
 import javax.net.ssl.HttpsURLConnection;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 
 public class Pokemon {
-    String name;
-    String type;
-    ImageIcon imageIcon;
+    private static int imageScale = 100;
+
+    private String name;
+    private String type;
+    private ImageIcon imageIcon;
 
     public Pokemon(String pokename, String poketype) {
         this.name = pokename;
@@ -76,12 +80,28 @@ public class Pokemon {
             Matcher m = r.matcher(result);
 
             if (m.find()) {
-                String imageUrl = m.group(1);
-                
-                return new ImageIcon(new ImageIcon(new URL(imageUrl)).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT), pokemonName);
-            } else {
-                return new ImageIcon("src/arraylist/hh.jpg");
-            }    
+                String imageUrlStr = m.group(1);
+
+                // Image image = ImageIO.read(new URL(imageUrl)).getScaledInstance(Pokemon.imageScale, Pokemon.imageScale, Image.SCALE_DEFAULT);
+
+                URL imageURL = new URL(imageUrlStr);
+                HttpURLConnection imageConn = (HttpURLConnection) imageURL.openConnection();
+                imageConn.setDoOutput(true);
+                imageConn.setRequestProperty("authority", "cdn.bulbagarden.net");
+                imageConn.setRequestProperty("upgrade-insecure-requests", "1");
+                imageConn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.3; Win64; x64) Gecko/20100101 Firefox/53.0");
+                imageConn.setRequestProperty("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+                imageConn.setRequestProperty("referer", "https://www.google.com/");
+                imageConn.setReadTimeout(5000);
+
+                Image image = ImageIO.read(imageConn.getInputStream()).getScaledInstance(Pokemon.imageScale, Pokemon.imageScale, Image.SCALE_DEFAULT);
+
+                if (image != null) {
+                    return new ImageIcon(image, pokemonName);
+                }
+            }
+            
+            return new ImageIcon("src/arraylist/hh.jpg");
         } catch (Exception e) {
             System.err.println(e);
             try {

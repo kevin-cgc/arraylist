@@ -37,6 +37,7 @@ public class PokemonGUI {
 		public PokemonListPanel() {
 			add (noPokemonLabel);
 			setBackground(Color.LIGHT_GRAY);
+			setPreferredSize(new Dimension(1000, 9000));
 		}
 
 		public void updateWithBackpack(PokemonBackpack pb) {
@@ -48,15 +49,21 @@ public class PokemonGUI {
 				ArrayList<Pokemon> bAL = pb.getBackpackArrayList();
 				for (int i = 0; i < bAL.size(); i++) {
 					Pokemon p = bAL.get(i);
-					JLabel pJLabel = new JLabel(""+p.getName()+", "+p.getType(), p.getImageIcon(), SwingConstants.CENTER);
-					pJLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
+					JLabel pJLabel = new JLabel(""+p.getName()+", "+p.getType());
+					
+					pJLabel.setIcon(p.getImageIcon());
+
+					pJLabel.setHorizontalTextPosition(JLabel.CENTER);
+					pJLabel.setVerticalTextPosition(JLabel.BOTTOM);
+										
 					pJLabel.setBackground(Color.WHITE);
 					pJLabel.setMaximumSize(new Dimension(50, 50));
 					add(pJLabel);
-					revalidate();
-					repaint();
 				}
 			}
+
+			revalidate();
+			repaint();
 		}
 	}
 
@@ -93,7 +100,7 @@ public class PokemonGUI {
 			// configure panel.
 			nameLabel.setForeground(Color.WHITE);
 			setBackground(Color.DARK_GRAY);
-			setPreferredSize(new Dimension(1250, 270));
+			setPreferredSize(new Dimension(1250, 600));
 
 		}
 
