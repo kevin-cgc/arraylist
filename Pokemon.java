@@ -49,6 +49,9 @@ public class Pokemon {
 
 
     public ImageIcon getImage() {
+        //uncomment next line if its too laggy
+        // if (true) return new ImageIcon("src/arraylist/hh.jpg");
+
         String pokemonName = this.name;
 
         try {

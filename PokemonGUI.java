@@ -11,8 +11,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 
 /**
@@ -37,7 +37,8 @@ public class PokemonGUI {
 		public PokemonListPanel() {
 			add (noPokemonLabel);
 			setBackground(Color.LIGHT_GRAY);
-			setPreferredSize(new Dimension(1000, 9000));
+			setPreferredSize(new Dimension(1000, 5000));
+			// setMaximumSize(new Dimension(1000, 5000));
 		}
 
 		public void updateWithBackpack(PokemonBackpack pb) {
@@ -57,7 +58,6 @@ public class PokemonGUI {
 					pJLabel.setVerticalTextPosition(JLabel.BOTTOM);
 										
 					pJLabel.setBackground(Color.WHITE);
-					pJLabel.setMaximumSize(new Dimension(50, 50));
 					add(pJLabel);
 				}
 			}
@@ -89,7 +89,10 @@ public class PokemonGUI {
 			add(typeText);
 			add(appendButton);
 			add(removeButton);
-			add(pokemonListPanel);
+
+			JScrollPane pane = new JScrollPane(pokemonListPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			pane.setPreferredSize(new Dimension(1100, 500));
+			add(pane);
 
 			// Default values
 
@@ -99,6 +102,8 @@ public class PokemonGUI {
 
 			// configure panel.
 			nameLabel.setForeground(Color.WHITE);
+			typeLabel.setForeground(Color.WHITE);
+
 			setBackground(Color.DARK_GRAY);
 			setPreferredSize(new Dimension(1250, 600));
 
