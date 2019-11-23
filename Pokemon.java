@@ -86,11 +86,11 @@ public class Pokemon {
             this.makingRequest = true;
             Future<ImageIcon> f = Pokemon.futureImageCacheMap.get(pokemonName);
             if (f != null) {
-                System.out.println(pokemonName+" using req");
+                // System.out.println(pokemonName+" using req");
                 return this.imageIcon = f.get();
             }
 
-            System.out.println(pokemonName+" making req");
+            // System.out.println(pokemonName+" making req");
             CompletableFuture<ImageIcon> nf = new CompletableFuture<ImageIcon>();
             Pokemon.futureImageCacheMap.put(pokemonName, nf);
 
