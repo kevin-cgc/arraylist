@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
@@ -13,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-
+import javax.swing.SwingWorker;
 
 /**
  * PokemonGUI
@@ -35,15 +36,38 @@ public class PokemonGUI {
 		JLabel noPokemonLabel = new JLabel("no pokemon in backpack");
 
 		public PokemonListPanel() {
-			add (noPokemonLabel);
+			add(noPokemonLabel);
 			setBackground(Color.LIGHT_GRAY);
 			setPreferredSize(new Dimension(1000, 5000));
 			// setMaximumSize(new Dimension(1000, 5000));
 		}
 
+		class PokemonImageLoader extends SwingWorker<ImageIcon, Object> {
+			Pokemon pokemon;
+			JLabel pJLabel;
+
+			public PokemonImageLoader(Pokemon p, JLabel pJLabel) {
+				this.pokemon = p;
+				this.pJLabel = pJLabel;
+			}
+
+			@Override
+			public ImageIcon doInBackground() throws InterruptedException, ExecutionException {
+				return this.pokemon.getImage();
+			}
+
+			@Override
+			protected void done() {
+				try {
+					pJLabel.setIcon(get());
+				} catch (Exception ignore) {
+				}
+			}
+		}
+
 		public void updateWithBackpack(PokemonBackpack pb) {
 			removeAll();
-			
+
 			if (pb.getBackpackSize() == 0) {
 				add(noPokemonLabel);
 			} else {
@@ -51,12 +75,16 @@ public class PokemonGUI {
 				for (int i = 0; i < bAL.size(); i++) {
 					Pokemon p = bAL.get(i);
 					JLabel pJLabel = new JLabel(""+p.getName()+", "+p.getType());
-					
+
 					pJLabel.setIcon(p.getImageIcon());
+
+					if (!p.imageLoaded() && !p.getMakingRequest()) {
+						(new PokemonImageLoader(p, pJLabel)).execute();
+					}
 
 					pJLabel.setHorizontalTextPosition(JLabel.CENTER);
 					pJLabel.setVerticalTextPosition(JLabel.BOTTOM);
-										
+
 					pJLabel.setBackground(Color.WHITE);
 					add(pJLabel);
 				}
@@ -82,7 +110,7 @@ public class PokemonGUI {
 
 		// Constructor: Sets up the Panel
 		public MainPokemonPanel() {
-			
+
 			add(nameLabel);
 			add(nameText);
 			add(typeLabel);
