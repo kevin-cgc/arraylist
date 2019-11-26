@@ -5,6 +5,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.regex.Matcher;
@@ -24,7 +25,7 @@ public class Pokemon {
 
     private final static int imageScale = 100;
     private final static Map<String, ImageIcon> imageCacheMap = new HashMap<String, ImageIcon>();
-    private final static Map<String, Future<ImageIcon>> futureImageCacheMap = new HashMap<String, Future<ImageIcon>>();
+    private final static Map<String, Future<ImageIcon>> futureImageCacheMap = new ConcurrentHashMap<String, Future<ImageIcon>>();
 
     private String name;
     private String type;
@@ -153,9 +154,9 @@ public class Pokemon {
                 return Pokemon.hhImageIcon;
             } catch (Exception e) {
                 System.err.println(e);
-                nf.cancel(true);
                 return Pokemon.hhImageIcon;
             } finally {
+                nf.cancel(true);
                 Pokemon.futureImageCacheMap.remove(pokemonName);
             }
         } finally {

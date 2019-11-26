@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JFrame;
@@ -34,6 +36,8 @@ public class PokemonGUI {
 
 	private static class PokemonListPanel extends JPanel {
 		JLabel noPokemonLabel = new JLabel("no pokemon in backpack");
+
+		Map<Pokemon, JLabel> pokemonJLabelWeakMap = new WeakHashMap<Pokemon, JLabel>();
 
 		public PokemonListPanel() {
 			add(noPokemonLabel);
@@ -74,7 +78,11 @@ public class PokemonGUI {
 				ArrayList<Pokemon> bAL = pb.getBackpackArrayList();
 				for (int i = 0; i < bAL.size(); i++) {
 					Pokemon p = bAL.get(i);
-					JLabel pJLabel = new JLabel(""+p.getName()+", "+p.getType());
+
+					if (!pokemonJLabelWeakMap.containsKey(p)) pokemonJLabelWeakMap.put(p, new JLabel());
+					JLabel pJLabel = pokemonJLabelWeakMap.get(p);
+
+					pJLabel.setText(""+p.getName()+", "+p.getType());
 
 					pJLabel.setIcon(p.getImageIcon());
 
