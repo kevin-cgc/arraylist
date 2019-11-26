@@ -22,6 +22,11 @@ public class PokemonBackpack {
     }
 
 
+    public void emptyBackpack() {
+        //clear the backpack
+
+        this.backpackArrayList.clear();
+    }
     
     public int getBackpackSize() {
         //return backpack size
