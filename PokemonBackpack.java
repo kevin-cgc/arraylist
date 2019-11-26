@@ -40,43 +40,81 @@ public class PokemonBackpack {
 
         if (backpackArrayList.size() != 0) backpackArrayList.remove(backpackArrayList.size()-1);
     }
-
-
-
     
-
+    public Pokemon getPokemonAtIndex(int index) {
+    	//get pokemon from index
+    	
+    	return this.backpackArrayList.get(index); 
+    }
 
     public void sortedInsertPokemonIntoBackpack(Pokemon pokemonToInsert) {
+    	//insert a pokemon into the index returned by getInsertIndexForNameSortedArrayList(pokemonToInsert)
+    	
         int insertIndex = this.getInsertIndexForNameSortedArrayList(pokemonToInsert);
-
         backpackArrayList.add(insertIndex, pokemonToInsert);
     }
+    
+    public ArrayList<String> createNameList() {
+    	//return a list of all the pokemon names
+    	ArrayList<String> stringlist = new ArrayList<String>();
+    	
+    	
+    	
+    	return stringlist;
+    }
+    /*public ArrayList<String> getUniqueTypes() {
+    	
+    	ArrayList<String> types = new ArrayList<String>();
+    	
+    	
+    	for (int i = 0; i < this.backpackArrayList.size(); i++) {
+    		Pokemon p = backpackArrayList.get(i);
+    		String pokemonType = p.getType();
+    		
+    		for (int j = 0; j < types.size(); j++) {
+    			if (this.backpackArrayList.get(i).getType().equalsIgnoreCase()) {
+    				//i=1
+    			}
+    		}
+    	}
+    	return types;
+    }*/
+    
+    
+    
+    
 
     public void removeAllPokemonWithName(String pokemonName) {
         //iterate through backpackArrayList and all the pokemon with pokemonName
 
-        for (int i = 0; i < backpackArrayList.size(); i++) { //iterate through the ArrayList
-            Pokemon pokemonAtIndexI = backpackArrayList.get(i);
-            if (pokemonAtIndexI.getName().equalsIgnoreCase(pokemonName)) backpackArrayList.remove(i);
-        }
+    	backpackArrayList.removeIf(p -> p.getName().equalsIgnoreCase(pokemonName));
+    	
+//        for (int i = backpackArrayList.size(); i > 0; i--) { //iterate through the ArrayList
+//            Pokemon pokemonAtIndexI = backpackArrayList.get(i);
+//            if (pokemonAtIndexI.getName().equalsIgnoreCase(pokemonName)) backpackArrayList.remove(i);
+//        }
     }
 
     public void removeAllPokemonWithType(String pokemonType) {
         //iterate through backpackArrayList and all the pokemon with pokemonType
 
-        for (int i = 0; i < backpackArrayList.size(); i++) { //iterate through the ArrayList
-            Pokemon pokemonAtIndexI = backpackArrayList.get(i);
-            if (pokemonAtIndexI.getType().equalsIgnoreCase(pokemonType)) backpackArrayList.remove(i);
-        }
+    	backpackArrayList.removeIf(p -> p.getType().equalsIgnoreCase(pokemonType));
+    	
+//    	for (int i = backpackArrayList.size(); i > 0; i--) { //iterate through the ArrayList
+//            Pokemon pokemonAtIndexI = backpackArrayList.get(i);
+//            if (pokemonAtIndexI.getType() == pokemonType) backpackArrayList.remove(i);
+//        }
     }
 
     public void removeAllPokemonWithNameAndType(String pokemonName, String pokemonType) {
         //iterate through backpackArrayList and all the pokemon with pokemonName and pokemonType
 
-        for (int i = 0; i < backpackArrayList.size(); i++) { //iterate through the ArrayList
-            Pokemon pokemonAtIndexI = backpackArrayList.get(i);
-            if (pokemonAtIndexI.getName().equalsIgnoreCase(pokemonName) && pokemonAtIndexI.getType().equalsIgnoreCase(pokemonType)) backpackArrayList.remove(i);
-        }
+    	backpackArrayList.removeIf(p -> p.getType().equalsIgnoreCase(pokemonType) && p.getName().equalsIgnoreCase(pokemonName));
+    	
+//    	for (int i = backpackArrayList.size(); i > 0; i--) { //iterate through the ArrayList
+//            Pokemon pokemonAtIndexI = backpackArrayList.get(i);
+//            if (pokemonAtIndexI.getName() == pokemonName && pokemonAtIndexI.getType() == pokemonType) backpackArrayList.remove(i);
+//        }
     }
 
 
