@@ -57,7 +57,7 @@ public class PokemonBackpack {
 
         for (int i = 0; i < backpackArrayList.size(); i++) { //iterate through the ArrayList
             Pokemon pokemonAtIndexI = backpackArrayList.get(i);
-            if (pokemonAtIndexI.getName() == pokemonName) backpackArrayList.remove(i);
+            if (pokemonAtIndexI.getName().equalsIgnoreCase(pokemonName)) backpackArrayList.remove(i);
         }
     }
 
@@ -66,7 +66,7 @@ public class PokemonBackpack {
 
         for (int i = 0; i < backpackArrayList.size(); i++) { //iterate through the ArrayList
             Pokemon pokemonAtIndexI = backpackArrayList.get(i);
-            if (pokemonAtIndexI.getType() == pokemonType) backpackArrayList.remove(i);
+            if (pokemonAtIndexI.getType().equalsIgnoreCase(pokemonType)) backpackArrayList.remove(i);
         }
     }
 
@@ -75,7 +75,7 @@ public class PokemonBackpack {
 
         for (int i = 0; i < backpackArrayList.size(); i++) { //iterate through the ArrayList
             Pokemon pokemonAtIndexI = backpackArrayList.get(i);
-            if (pokemonAtIndexI.getName() == pokemonName && pokemonAtIndexI.getType() == pokemonType) backpackArrayList.remove(i);
+            if (pokemonAtIndexI.getName().equalsIgnoreCase(pokemonName) && pokemonAtIndexI.getType().equalsIgnoreCase(pokemonType)) backpackArrayList.remove(i);
         }
     }
 
