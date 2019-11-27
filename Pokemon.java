@@ -25,6 +25,9 @@ public class Pokemon {
 
     private final static int imageScale = 100;
     private final static Map<String, ImageIcon> imageCacheMap = new HashMap<String, ImageIcon>();
+    static {
+        imageCacheMap.put("", Pokemon.hhImageIcon);
+    }
     private final static Map<String, Future<ImageIcon>> futureImageCacheMap = new ConcurrentHashMap<String, Future<ImageIcon>>();
 
     private String name;

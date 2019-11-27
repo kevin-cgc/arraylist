@@ -13,7 +13,7 @@ public class PokemonBackpack {
         //simply initialize backpackArrayList
         this.backpackArrayList = new ArrayList<Pokemon>();
     }
-    //GETTERS
+
     /**
      * @return the backpackArrayList
      */

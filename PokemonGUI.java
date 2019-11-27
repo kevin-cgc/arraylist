@@ -2,6 +2,7 @@ package arraylist;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
+import javax.swing.border.EmptyBorder;
 
 /**
  * PokemonGUI
@@ -41,7 +43,7 @@ public class PokemonGUI {
 
 		public PokemonListPanel() {
 			add(noPokemonLabel);
-			setBackground(Color.LIGHT_GRAY);
+			setBackground(Color.decode("#97c7e6"));
 			setPreferredSize(new Dimension(1000, 2500));
 			// setMaximumSize(new Dimension(1000, 5000));
 		}
@@ -121,6 +123,19 @@ public class PokemonGUI {
 		// Constructor: Sets up the Panel
 		public MainPokemonPanel() {
 
+			for (JTextField textField : (new JTextField[]{nameText, typeText})) {
+				textField.setBorder(new EmptyBorder(new Insets(5, 5, 5, 5)));
+				textField.setForeground(Color.BLACK);
+  				textField.setBackground(Color.WHITE);
+			}
+
+			for (JButton button : (new JButton[]{appendButton, removeButton, backpackSizeButton, sortButton})) {
+				button.setBorderPainted(false);
+				button.setFocusPainted(false);
+				button.setForeground(Color.BLACK);
+  				button.setBackground(Color.WHITE);
+			}
+
 			add(nameLabel);
 			add(nameText);
 			add(typeLabel);
@@ -147,7 +162,7 @@ public class PokemonGUI {
 			nameLabel.setForeground(Color.WHITE);
 			typeLabel.setForeground(Color.WHITE);
 
-			setBackground(Color.DARK_GRAY);
+			setBackground(Color.decode("#29353d"));
 			setPreferredSize(new Dimension(1250, 600));
 
 		}
