@@ -6,12 +6,14 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Random;
 import java.util.WeakHashMap;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -48,7 +50,6 @@ public class PokemonGUI {
 			add(noPokemonLabel);
 			setBackground(Color.decode("#97c7e6"));
 			setPreferredSize(new Dimension(900, 2500));
-			// setMaximumSize(new Dimension(1000, 5000));
 		}
 
 		class PokemonImageLoader extends SwingWorker<ImageIcon, Object> {
@@ -114,15 +115,24 @@ public class PokemonGUI {
 		private JTextField nameText = new JTextField(15); // enter Pokemon name
 		private JLabel typeLabel = new JLabel("Pokemon Type");
 		private JTextField typeText = new JTextField(15); // enter Pokemon type
+		private JLabel indexName = new JLabel("Index: ");
+		private JTextField indexText = new JTextField(3);
+		private JLabel indexLabel = new JLabel();
 
 		private JButton appendButton = new JButton("add pokemon to end"); // buttons
-		private JButton insertButton = new JButton("insert pokemon sorted");
+		private JButton insertNameSortedButton = new JButton("insert pokemon sorted by name");
+		private JButton insertTypeSortedButton = new JButton("insert pokemon sorted by type");
 		private JButton removeButton = new JButton("remove pokemon from end");
-		private JButton removeAll = new JButton("remove all pokemon");
+		private JButton emptyBackpack = new JButton("remove all pokemon");
 		private JButton backpackSizeButton = new JButton("get backpack size");
 		private JButton getNameListButton = new JButton("get name list");
-		private JButton sortButton = new JButton("sort pokemon");
+		private JButton sortNameButton = new JButton("sort pokemon by name");
+		private JButton sortTypeButton = new JButton("sort pokemon by type");
 		private JButton addRandomButton = new JButton("add random pokemon");
+		private JButton indexButton = new JButton("get pokemon at index");
+		private JButton removeNameButton = new JButton("remove all with name");
+		private JButton removeTypeButton = new JButton("remove all with type");
+		private JButton removeNameTypeButton = new JButton("remove all with name & type");
 
 		private JTextArea consoleText = new JTextArea(30, 18);
 
@@ -133,11 +143,11 @@ public class PokemonGUI {
 		// Constructor: Sets up the Panel
 		public MainPokemonPanel() {
 
-			for (JLabel textField : (new JLabel[]{nameLabel, typeLabel})) {
+			for (JLabel textField : (new JLabel[]{nameLabel, typeLabel, indexName, indexLabel})) {
 				textField.setForeground(Color.WHITE);
 			}
 
-			for (JTextField textField : (new JTextField[]{nameText, typeText})) {
+			for (JTextField textField : (new JTextField[]{nameText, typeText, indexText})) {
 				textField.setBorder(new EmptyBorder(new Insets(5, 5, 5, 5)));
 				textField.setForeground(Color.BLACK);
   				textField.setBackground(Color.WHITE);
@@ -146,13 +156,19 @@ public class PokemonGUI {
 			ButtonListener bl = new ButtonListener();
 			for (JButton button : (new JButton[]{
 				appendButton,
-				insertButton,
+				insertNameSortedButton,
+				insertTypeSortedButton,
 				removeButton,
-				removeAll,
+				emptyBackpack,
 				backpackSizeButton,
 				getNameListButton,
-				sortButton,
-				addRandomButton
+				sortNameButton,
+				sortTypeButton,
+				addRandomButton,
+				indexButton,
+				removeNameButton,
+				removeTypeButton,
+				removeNameTypeButton
 			})) {
 				button.addActionListener(bl);
 				button.setBorderPainted(false);
@@ -164,8 +180,8 @@ public class PokemonGUI {
 
 			consoleText.setLineWrap(true);
 
-			JScrollPane pane = new JScrollPane(pokemonListPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-			pane.setPreferredSize(new Dimension(1100, 500));
+			JScrollPane backpackScrollPane = new JScrollPane(pokemonListPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			backpackScrollPane.setPreferredSize(new Dimension(1100, 500));
 
 
 
@@ -177,24 +193,40 @@ public class PokemonGUI {
 			add(typeText);
 
 
-			add(pane);
-			add(consoleText);
+			add(backpackScrollPane);
+
+			JScrollPane consoleScrollPane = new JScrollPane(consoleText);
+			consoleScrollPane.setPreferredSize(new Dimension(250, 500));
+			add(consoleScrollPane);
+
+
+			JPanel indexPanel = new JPanel();
+			indexPanel.setBackground(Color.decode("#29353d"));
+			indexPanel.setPreferredSize(new Dimension(280, 300));
+			add(indexPanel);
+			indexPanel.add(indexName);
+			indexPanel.add(indexLabel);
+			indexPanel.add(indexText);
+			indexPanel.add(indexButton);
 
 
 			add(appendButton);
-			add(insertButton);
-			add(removeButton);
-			add(removeAll);
+			add(insertNameSortedButton);
+			add(insertTypeSortedButton);
 			add(backpackSizeButton);
 			add(getNameListButton);
-			add(sortButton);
+			add(sortNameButton);
+			add(sortTypeButton);
+			add(removeButton);
+			add(emptyBackpack);
+			add(removeNameButton);
+			add(removeTypeButton);
+			add(removeNameTypeButton);
 			add(addRandomButton);
 
 
-
-
 			setBackground(Color.decode("#29353d"));
-			setPreferredSize(new Dimension(1400, 650));
+			setPreferredSize(new Dimension(1700, 650));
 		}
 
 		// private internal class that is a listener for button push (action) events.
@@ -209,18 +241,25 @@ public class PokemonGUI {
 					Pokemon p = new Pokemon(pokemonName, pokemonType);
 
 					pb.appendPokemonToBackpack(p);
-				} else if (event.getSource() == insertButton) {
+				} else if (event.getSource() == insertNameSortedButton) {
 					String pokemonName = nameText.getText();
 					String pokemonType = typeText.getText();
 
 					Pokemon p = new Pokemon(pokemonName, pokemonType);
 
-					pb.sortedInsertPokemonIntoBackpack(p);
+					pb.sortedInsertByNameIntoBackpack(p);
+				} else if (event.getSource() == insertTypeSortedButton) {
+					String pokemonName = nameText.getText();
+					String pokemonType = typeText.getText();
+
+					Pokemon p = new Pokemon(pokemonName, pokemonType);
+
+					pb.sortedInsertByTypeIntoBackpack(p);
 				} else if (event.getSource() == removeButton) {
 					pb.removeLastPokemonFromBackpack();
 				}
-				else if(event.getSource() == removeAll) {
-					pb.removeAll();
+				else if(event.getSource() == emptyBackpack) {
+					pb.emptyBackpack();
 				}
 				else if(event.getSource() == backpackSizeButton){
 					consoleText.setText("backpack size: " + pb.getBackpackSize());
@@ -228,8 +267,11 @@ public class PokemonGUI {
 				else if(event.getSource() == getNameListButton){
 					consoleText.setText("get name list: [\n" + String.join("\n", pb.createNameList())+"\n]");
 				}
-				else if(event.getSource() == sortButton) {
+				else if(event.getSource() == sortNameButton) {
 					pb.sortByName();
+				}
+				else if(event.getSource()== sortTypeButton) {
+					pb.sortByType();
 				}
 				else if(event.getSource() == addRandomButton){
 					Random gen = new Random();
@@ -241,6 +283,22 @@ public class PokemonGUI {
 						pb.appendPokemonToBackpack(p);
 					}
 				}
+				else if (event.getSource() == indexButton) {
+					try {
+						Pokemon pai = pb.getPokemonAtIndex(Integer.parseInt(indexText.getText()));
+						indexLabel.setText("<html>pokemon[" + indexText.getText() + "]: " + pai.getName() + "<br> Type: " + pai.getType() + "</html>");
+						indexLabel.setIcon(pai.getImage());
+					} catch (Exception e) {
+						consoleText.setText(e.toString());
+					}
+				} else if (event.getSource() == removeNameButton) {
+					pb.removeAllPokemonWithName(nameText.getText());
+				} else if (event.getSource() == removeTypeButton) {
+					pb.removeAllPokemonWithType(typeText.getText());
+				} else if (event.getSource() == removeNameTypeButton) {
+					pb.removeAllPokemonWithNameAndType(nameText.getText(), typeText.getText());
+				}
+
 
 				pokemonListPanel.updateWithBackpack(pb);
 
