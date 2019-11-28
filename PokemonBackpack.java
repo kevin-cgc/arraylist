@@ -17,54 +17,54 @@ public class PokemonBackpack {
     /**
      * @return the backpackArrayList
      */
+//DONE
     public ArrayList<Pokemon> getBackpackArrayList() {
         return backpackArrayList;
     }
 
-
+//DONE
     public void emptyBackpack() {
         //clear the backpack
 
         this.backpackArrayList.clear();
     }
-    
+//DONE    
     public int getBackpackSize() {
         //return backpack size
 
         return this.backpackArrayList.size();
     }
-
+//DONE
     public void appendPokemonToBackpack(Pokemon pokemonToAppend) {
         //add the pokemon to the end of the backpack
 
         backpackArrayList.add(pokemonToAppend);
     }
-
+//DONE
     public void removeLastPokemonFromBackpack() {
         //remove the last pokemon in the backpack if there are still pokemon in the backpack
 
         if (backpackArrayList.size() != 0) backpackArrayList.remove(backpackArrayList.size()-1);
     }
-    
+//DONE   
     public Pokemon getPokemonAtIndex(int index) {
     	//get pokemon from index
     	
     	return this.backpackArrayList.get(index); 
     }
-
+//TODO**********************************************************
     public void sortedInsertPokemonIntoBackpack(Pokemon pokemonToInsert) {
     	//insert a pokemon into the index returned by getInsertIndexForNameSortedArrayList(pokemonToInsert)
     	
         int insertIndex = this.getInsertIndexForNameSortedArrayList(pokemonToInsert);
         backpackArrayList.add(insertIndex, pokemonToInsert);
     }
-    
+//TODO**********************************************************   
     public ArrayList<String> createNameList() {
     	//return a list of all the pokemon names
     	ArrayList<String> stringlist = new ArrayList<String>();
     	
-    	
-    	
+    	    	
     	return stringlist;
     }
     /*public ArrayList<String> getUniqueTypes() {
@@ -88,7 +88,7 @@ public class PokemonBackpack {
     
     
     
-
+//DONE
     public void removeAllPokemonWithName(String pokemonName) {
         //iterate through backpackArrayList and all the pokemon with pokemonName
 
@@ -99,7 +99,7 @@ public class PokemonBackpack {
 //            if (pokemonAtIndexI.getName().equalsIgnoreCase(pokemonName)) backpackArrayList.remove(i);
 //        }
     }
-
+//DONE
     public void removeAllPokemonWithType(String pokemonType) {
         //iterate through backpackArrayList and all the pokemon with pokemonType
 
@@ -110,7 +110,7 @@ public class PokemonBackpack {
 //            if (pokemonAtIndexI.getType() == pokemonType) backpackArrayList.remove(i);
 //        }
     }
-
+//DONE
     public void removeAllPokemonWithNameAndType(String pokemonName, String pokemonType) {
         //iterate through backpackArrayList and all the pokemon with pokemonName and pokemonType
 
@@ -158,10 +158,11 @@ public class PokemonBackpack {
 
 
     //you can ignore everything beyond this point
+//DONE
     public void sortByName() {
         this.backpackArrayList.sort(Comparator.comparing(Pokemon::getName));
     }
-
+//DONE
     public void sortByType() {
         this.backpackArrayList.sort(Comparator.comparing(Pokemon::getType));
     }
