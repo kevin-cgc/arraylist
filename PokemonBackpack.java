@@ -24,39 +24,38 @@ public class PokemonBackpack {
     public void emptyBackpack() { //in GUI
         //clear the backpack
 
-        this.backpackArrayList.clear();
+        //CODE THIS
     }
 
     public int getBackpackSize() { //in GUI
         //return backpack size
 
-        return this.backpackArrayList.size();
+        //CODE THIS
     }
 
     public void appendPokemonToBackpack(Pokemon pokemonToAppend) { //in GUI
         //add the pokemon to the end of the backpack
 
-        backpackArrayList.add(pokemonToAppend);
+        //CODE THIS
     }
 
     public void removeLastPokemonFromBackpack() { //in GUI
         //remove the last pokemon in the backpack if there are still pokemon in the backpack
 
-        if (backpackArrayList.size() != 0) backpackArrayList.remove(backpackArrayList.size()-1);
+        //CODE THIS
     }
 
     public Pokemon getPokemonAtIndex(int index) { //in GUI
     	//get pokemon from index
 
-    	return this.backpackArrayList.get(index);
+    	//CODE THIS
     }
 
 
     public void sortedInsertByNameIntoBackpack(Pokemon pokemonToInsert) { //in GUI
     	//insert a pokemon into the index returned by getInsertIndexForNameSortedArrayList(pokemonToInsert)
 
-        int insertIndex = this.getInsertIndexForNameSortedArrayList(pokemonToInsert);
-        backpackArrayList.add(insertIndex, pokemonToInsert);
+        //CODE THIS
     }
     public void sortedInsertByTypeIntoBackpack(Pokemon pokemonToInsert) { //in GUI
     	//insert a pokemon into the index returned by getInsertIndexForNameSortedArrayList(pokemonToInsert)
@@ -69,9 +68,7 @@ public class PokemonBackpack {
     	//return a list of all the pokemon names
     	ArrayList<String> stringlist = new ArrayList<String>();
 
-        for (int i = 0; i < backpackArrayList.size(); i++) {
-            stringlist.add(backpackArrayList.get(i).getName());
-        }
+        //CODE THIS
 
     	return stringlist;
     }
@@ -97,7 +94,7 @@ public class PokemonBackpack {
     public int getInsertIndexForTypeSortedArrayList(Pokemon pokemonToInsert) { //in GUI
         //just getInsertIndexForNameSortedArrayList, but instead of comparing names it is comparing types
 
-
+        //CODE THIS
 
         return backpackArrayList.size();
     }
@@ -136,25 +133,13 @@ public class PokemonBackpack {
     public void removeAllPokemonWithType(String pokemonType) { //in GUI
         //iterate through backpackArrayList and all the pokemon with pokemonType
 
-    	backpackArrayList.removeIf(p -> p.getType().equalsIgnoreCase(pokemonType));
-
-//      you must iterate backwards (i--) because removing elements would cause you to skip forward one
-//    	for (int i = backpackArrayList.size(); i > 0; i--) { //iterate through the ArrayList
-//            Pokemon pokemonAtIndexI = backpackArrayList.get(i);
-//            if (pokemonAtIndexI.getType() == pokemonType) backpackArrayList.remove(i);
-//        }
+        //CODE THIS
     }
 
     public void removeAllPokemonWithNameAndType(String pokemonName, String pokemonType) { //in GUI
         //iterate through backpackArrayList and all the pokemon with pokemonName and pokemonType
 
-    	backpackArrayList.removeIf(p -> p.getType().equalsIgnoreCase(pokemonType) && p.getName().equalsIgnoreCase(pokemonName));
-
-//      you must iterate backwards (i--) because removing elements would cause you to skip forward one
-//    	for (int i = backpackArrayList.size(); i > 0; i--) { //iterate through the ArrayList
-//            Pokemon pokemonAtIndexI = backpackArrayList.get(i);
-//            if (pokemonAtIndexI.getName() == pokemonName && pokemonAtIndexI.getType() == pokemonType) backpackArrayList.remove(i);
-//        }
+        //CODE THIS
     }
 
 
@@ -167,6 +152,20 @@ public class PokemonBackpack {
 
     public void sortByType() { //in GUI
         this.backpackArrayList.sort(Comparator.comparing(Pokemon::getType));
+    }
+
+    public void sortByNameAndType() {
+        //sort by name and also type
+        //FOR EXAMPLE:
+        //  ambipom, normal
+        //  alakazam, mind
+        //  heatran, fire
+        //  heatran, metal
+        //  infernape, brawler
+        //  infernape, fire
+        //  uxie, mind
+
+        //CODE THIS
     }
 
 }
