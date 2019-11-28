@@ -157,7 +157,7 @@ public class Pokemon {
 
                 return Pokemon.hhImageIcon;
             } catch (Exception e) {
-                System.err.println(e);
+                // System.err.println(e);
                 return Pokemon.hhImageIcon;
             } finally {
                 nf.cancel(true);

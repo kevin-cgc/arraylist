@@ -22,25 +22,25 @@ public class PokemonBackpack {
     }
 
 
-    public void emptyBackpack() {
+    public void removeAll() { //in GUI
         //clear the backpack
 
         this.backpackArrayList.clear();
     }
 
-    public int getBackpackSize() {
+    public int getBackpackSize() { //in GUI
         //return backpack size
 
         return this.backpackArrayList.size();
     }
 
-    public void appendPokemonToBackpack(Pokemon pokemonToAppend) {
+    public void appendPokemonToBackpack(Pokemon pokemonToAppend) { //in GUI
         //add the pokemon to the end of the backpack
 
         backpackArrayList.add(pokemonToAppend);
     }
 
-    public void removeLastPokemonFromBackpack() {
+    public void removeLastPokemonFromBackpack() { //in GUI
         //remove the last pokemon in the backpack if there are still pokemon in the backpack
 
         if (backpackArrayList.size() != 0) backpackArrayList.remove(backpackArrayList.size()-1);
