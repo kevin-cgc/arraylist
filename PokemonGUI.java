@@ -226,7 +226,7 @@ public class PokemonGUI {
 
 
 			setBackground(Color.decode("#29353d"));
-			setPreferredSize(new Dimension(1700, 650));
+			setPreferredSize(new Dimension(1665, 650));
 		}
 
 		// private internal class that is a listener for button push (action) events.
