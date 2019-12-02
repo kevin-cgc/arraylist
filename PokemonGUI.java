@@ -179,6 +179,9 @@ public class PokemonGUI {
 
 
 			consoleText.setLineWrap(true);
+			
+			JPanel l2Panel = new JPanel();
+			l2Panel.setBackground(Color.decode("#29353d"));
 
 			JScrollPane backpackScrollPane = new JScrollPane(pokemonListPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			backpackScrollPane.setPreferredSize(new Dimension(1100, 500));
@@ -193,22 +196,23 @@ public class PokemonGUI {
 			add(typeText);
 
 
-			add(backpackScrollPane);
+			l2Panel.add(backpackScrollPane);
 
 			JScrollPane consoleScrollPane = new JScrollPane(consoleText);
 			consoleScrollPane.setPreferredSize(new Dimension(250, 500));
-			add(consoleScrollPane);
+			l2Panel.add(consoleScrollPane);
 
 
 			JPanel indexPanel = new JPanel();
 			indexPanel.setBackground(Color.decode("#29353d"));
 			indexPanel.setPreferredSize(new Dimension(280, 300));
-			add(indexPanel);
+			l2Panel.add(indexPanel);
 			indexPanel.add(indexName);
 			indexPanel.add(indexLabel);
 			indexPanel.add(indexText);
 			indexPanel.add(indexButton);
 
+			add(l2Panel);
 
 			add(appendButton);
 			add(insertNameSortedButton);
